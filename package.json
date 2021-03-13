@@ -1,9 +1,18 @@
 {
   "name": "ieftool",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Uploader tool for B2C",
   "main": "dist/entry.js",
   "license": "MIT",
+  "author": {
+    "name": "Daryl Clarino",
+    "email": "clarinojd@gmail.com",
+    "url": "https://judedaryl.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/judedaryl/ieftool"
+  },
   "scripts": {
     "start": "tsc && node dist/entry.js",
     "dev": "tsc-watch --onSuccess 'node ./dist/entry.js'",
