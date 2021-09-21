@@ -58,7 +58,8 @@ class ApiClient {
             await this.client.put(`https://graph.microsoft.com/beta/trustFramework/policies/${policyId}/$value`, content);
         }
         catch (err) {
-            throw new Error(JSON.stringify(err.response.data.error.message, null, 3));
+            const message = err.response ? JSON.stringify(err.response.data, null, 3) : err.message;
+            throw new Error(message);
         }
     }
 }
