@@ -55,3 +55,9 @@ export function batchPolicies(branches: Branch[], batch: Policy[][] = []) {
     });
     return batch;
 }
+
+export function uniquenessCheck(policies: Policy[]) {
+    policies.filter((value, i, arr) => {
+        return arr.findIndex(i => i.policyId == value.policyId) == i
+    }).length != policies.length
+}
