@@ -1,8 +1,6 @@
-import { Branch } from "../types/branch";
-import { Policy } from "../types/policy";
+import Branch from "../branch";
 
-
-export function convertToTree(policies: Policy[]) {
+export function convertToTree(policies: IPolicy[]) {
     let branches = policies.map(q => new Branch(q));
     while (branches.some(q => q.policy.parentPolicyId != null)) {
         const b = branches.pop();
@@ -19,7 +17,7 @@ export function convertToTree(policies: Policy[]) {
     return branches;
 }
 
-export function recursiveFind(finding: string, policyId: string, branches: Branch[]): Branch {
+export function recursiveFind(finding: string, policyId: string, branches: Branch[]): IBranch {
     return branches.reduce((q, item) => {
         if (q) return q;
         if (item.policy.policyId == policyId) return item;
@@ -28,7 +26,7 @@ export function recursiveFind(finding: string, policyId: string, branches: Branc
 }
 
 
-export function convertToFlat(branches: Branch[], policies: Policy[]) {
+export function convertToFlat(branches: IBranch[], policies: IPolicy[]) {
 
     branches.forEach(q => {
         policies.push(q.policy);

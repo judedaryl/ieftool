@@ -1,10 +1,8 @@
-import * as path from 'path';
 import * as fs from 'fs';
+import * as path from 'path';
 import { parseStringPromise } from 'xml2js';
-import { Policy } from '../types/policy';
-import { Branch } from '../types/branch';
 
-export async function getPolicyDetailsAsync(path: string): Promise<Policy> {
+export async function getPolicyDetailsAsync(path: string): Promise<IPolicy> {
     var content = fs.readFileSync(path, 'utf8').replace("\ufeff", "");
     try {
         const xml = await parseStringPromise(content);
@@ -26,26 +24,29 @@ export async function getPolicyDetailsAsync(path: string): Promise<Policy> {
 }
 
 
-export function getPolicies(dir: string) {
-    let policies: string[] = [];
-    const traverseDirectory = (directory: string) => {
-        fs.readdirSync(directory).forEach(file => {
+export async function getPolicies(dir: string): Promise<IPolicy[]> {
+    let policies: IPolicy[] = [];
+    const traverseDirectory = async (directory: string) => {
+        const files = fs.readdirSync(directory);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
             let filePath = path.join(directory, file);
             if (fs.lstatSync(filePath).isDirectory())
-                traverseDirectory(filePath)
+                await traverseDirectory(filePath)
             else {
                 const ext = path.extname(filePath);
-                if (ext == '.xml')
-                    policies = [...policies, filePath]
+                if (ext == '.xml') {
+                    const policy = await getPolicyDetailsAsync(filePath)
+                    policies = [...policies, policy]
+                }
             }
-        })
+        }
     }
-    traverseDirectory(dir);
+    await traverseDirectory(dir);
     return policies
 }
 
-export function batchPolicies(branches: Branch[], batch: Policy[][] = []) {
-
+export function batchPolicies(branches: IBranch[], batch: IPolicy[][] = []) {
     var batches = branches.map(q => q.policy);
     batch.push(batches);
     branches.forEach(q => {
@@ -56,7 +57,7 @@ export function batchPolicies(branches: Branch[], batch: Policy[][] = []) {
     return batch;
 }
 
-export function uniquenessCheck(policies: Policy[]) {
+export function uniquenessCheck(policies: IPolicy[]) {
     policies.filter((value, i, arr) => {
         return arr.findIndex(i => i.policyId == value.policyId) == i
     }).length != policies.length

@@ -1,24 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as msal from '@azure/msal-node';
-import { ConfidentialClientApplication } from '@azure/msal-node';
+import axios, { AxiosInstance } from 'axios';
+import { format } from 'util';
+import constants from '../constants';
 
-
-interface Config {
-    tenant: string;
-    clientId: string;
-    clientSecret: string;
-}
-
-type TokenInterceptor = (
-    client: ConfidentialClientApplication
-) =>
-    | ((
-        value: AxiosRequestConfig
-    ) => AxiosRequestConfig | Promise<AxiosRequestConfig>)
-    | undefined;
-
-
-const tokenInterceptor: TokenInterceptor = (client: ConfidentialClientApplication) => async (value) => {
+const tokenInterceptor: ITokenInterceptor = (client) => async (value) => {
     const request = await client.acquireTokenByClientCredential({
         scopes: ["https://graph.microsoft.com/.default"]
     });
@@ -32,9 +17,14 @@ const tokenInterceptor: TokenInterceptor = (client: ConfidentialClientApplicatio
     return value;
 }
 
-class ApiClient {
+
+export interface IApiClient {
+    uploadPolicy: (policyId: string, content: string) => void
+}
+
+export class ApiClient implements IApiClient {
     private client: AxiosInstance;
-    constructor(config: Config) {
+    constructor(config: IConfig) {
         const { clientId, clientSecret, tenant } = config;
         const clientConfig: msal.Configuration = {
             auth: {
@@ -44,18 +34,14 @@ class ApiClient {
             }
         }
         const app = new msal.ConfidentialClientApplication(clientConfig);
-        this.client = axios.create({
-            url: "https://graph.microsoft.com",
-            baseURL: "https://graph.microsoft.com"
-        })
-
+        this.client = axios.create();
         this.client.interceptors.request.use(tokenInterceptor(app));
     }
 
 
     async uploadPolicy(policyId: string, content: string) {
         try {
-            await this.client.put(`https://graph.microsoft.com/beta/trustFramework/policies/${policyId}/$value`, content);
+            await this.client.put(format(constants.graphUri, policyId), content);
         }
         catch (err) {
             const message = err.response ? JSON.stringify(err.response.data, null, 3) : err.message;
@@ -63,5 +49,3 @@ class ApiClient {
         }
     }
 }
-
-export default ApiClient;
