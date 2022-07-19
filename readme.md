@@ -1,3 +1,7 @@
+# Go port
+
+A port of this package written in golang is available at https://github.com/judedaryl/go-ieftool. Both packages these packages will be supported. If you want to use the tool but do not want the node runtime that it requires, please check out the port.
+
 # About
 
 ``ieftool`` is a cli library based on npm for uploading [B2C TrustFramework Policies](https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-trust-frameworks).
