@@ -4,3 +4,9 @@ export const parseOptions = (options: { tenant_id: string, client_id: string, cl
     clientSecret: options.client_secret,
     path: options.path
 })
+
+export const parseBuildOptions = (options: { sourceFolder: string, configFile: string, targetFolder: string }) => ({
+    sourceFolder: options.sourceFolder,
+    configFile: options.configFile,
+    targetFolder: options.targetFolder,
+})

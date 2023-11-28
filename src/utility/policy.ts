@@ -46,6 +46,31 @@ export async function getPolicies(dir: string): Promise<IPolicy[]> {
     return policies
 }
 
+export function transformPolicies(policies: IPolicy[], targetDir: string, configFilePath: string) {
+
+    let configFile = fs.readFileSync(configFilePath, 'utf-8');
+    let transformConfig: ITransformConfig = JSON.parse(configFile);
+
+    for (let i = 0; i < policies.length; i++) {
+        let policy = policies[i];         
+
+        fs.readFile(policy.path, 'utf8', function (err,data) {
+            if (err) {
+              return console.log(err);
+            }
+            var result = data.replace(/{{ tenantId }}/g, transformConfig.tenantId);
+            result = result.replace(/{{ proxyIdentityExperienceFrameworkClientId }}/g, transformConfig.proxyIdentityExperienceFrameworkClientId);
+            result = result.replace(/{{ identityExperienceFrameworkClientId }}/g, transformConfig.identityExperienceFrameworkClientId);
+            result = result.replace(/{{ deploymentMode }}/g, transformConfig.deploymentMode);
+          
+            let targetPath = targetDir + '\\' + policy.policyId + '.xml';
+            fs.writeFile(targetPath, result, 'utf8', function (err) {
+               if (err) return console.log(err);
+            });
+          });
+    }
+}
+
 export function batchPolicies(branches: IBranch[], batch: IPolicy[][] = []) {
     var batches = branches.map(q => q.policy);
     batch.push(batches);

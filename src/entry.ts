@@ -7,8 +7,8 @@ import figlet from 'figlet';
 import * as fs from 'fs';
 import { ApiClient, IApiClient } from './api';
 import { convertToTree } from './utility/branch';
-import { parseOptions } from './utility/commander';
-import { batchPolicies, getPolicies } from './utility/policy';
+import { parseOptions, parseBuildOptions } from './utility/commander';
+import { batchPolicies, getPolicies, transformPolicies } from './utility/policy';
 
 clear();
 
@@ -51,6 +51,27 @@ program
         console.log(chalk.green(`Successfully uploaded all policies`))
         console.log(`================================================`)
         console.log(`Ellapsed: ${(Date.now() - start) / 1000}`)
+    });
+
+program
+    .command('build')
+    .description('')
+    .option('-s, --sourceFolder <path>', 'Source folder path for policies')
+    .option('-c, --configFile <path>', 'Config file path')
+    .option('-t, --targetFolder <path>', 'Target folder path for policies')
+    .action(async (options) => {
+        const start = Date.now();
+        console.log(chalk.green('Starting Policy Build'))
+
+        const { sourceFolder, configFile, targetFolder } = parseBuildOptions(options);
+
+        let policies = await getPolicies(sourceFolder);
+        transformPolicies(policies, targetFolder, configFile);          
+       
+        console.log(`===============================================`);
+        console.log(chalk.green(`Successfully built all policies`));
+        console.log(`================================================`);
+        console.log(`Ellapsed: ${(Date.now() - start) / 1000}`);        
     });
 
 async function batchedUpload(client: IApiClient, batch: IPolicy[][]) {

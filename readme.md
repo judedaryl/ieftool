@@ -84,6 +84,7 @@ Options:
 
 Commands:
   deploy [options]
+  build [buildOptions]
   help [command]    display help for command
 ```
 
@@ -103,6 +104,30 @@ Options:
 ```
 
 <br/>
+
+### build
+
+The ``build`` command is responsible for replacing placeholders in policy files from a config.json file.
+
+```
+Usage: ieftool build [options]
+
+Options:
+  -s, --sourceFolder <path>            Source folder path for policies
+  -c, --configFile <path>              Config file path for json file
+  -t, --targetFolder <path>            Target folder path for policies
+```
+
+The config.json file must be in the following format
+```
+{
+	"tenantId": "mytenant.onmicrosoft.com",
+	"deploymentMode": "Development",
+	"identityExperienceFrameworkClientId": "your-client-id",
+	"proxyIdentityExperienceFrameworkClientId": "your-client-id2"
+}
+```
+
 <br/>
 
 # Usage

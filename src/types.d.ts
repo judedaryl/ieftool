@@ -22,3 +22,10 @@ interface IBranch {
     policy: IPolicy
     children: IBranch[]
 }
+
+interface ITransformConfig {
+    tenantId: string;
+    deploymentMode: string;
+    identityExperienceFrameworkClientId: string;
+    proxyIdentityExperienceFrameworkClientId: string;
+}
