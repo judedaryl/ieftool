@@ -1,6 +1,6 @@
 {
   "name": "ieftool",
-  "version": "1.0.9",
+  "version": "1.10.0",
   "description": "Uploader tool for B2C",
   "main": "dist/entry.js",
   "license": "MIT",
