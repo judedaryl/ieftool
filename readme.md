@@ -98,12 +98,21 @@ Options:
   -h, --help                           display help for command
 ```
 
-<br/>
-<br/>
+### build
+Usage: ieftool build [options]
+
+Compiles B2C templates and policies
+
+Options:
+  -c, --config <path>       Specify the path to the b2c compiler configuration (default: "./b2c-template.json")
+  -p, --source_path <path>  Specify the path to the templates folder (default: "./src")
+  -o, --output_dir <path>   Specify the output folder (default: "./build")
+  -h, --help                display help for command
+
 
 # Usage
 
-To upload policies into a B2C tenant.
+### To upload policies into a B2C tenant.
 
 ```sh
 ieftool deploy -t { tenant } -c { client_id } -s { client_secret } -p { source_path }
@@ -116,3 +125,16 @@ ieftool deploy -t { tenant } -c { client_id } -s { client_secret } -p { source_p
 | client_id | The client id of an app registration in B2C that has permissions for TrustFrameworkPolicies |
 | client_secret | The client secret of an app registration in B2C that has permissions for TrustFrameworkPolicies |
 | source_path | The path to your b2c policies. In the tree structure above it would be ``./src`` |
+
+
+### To build policies
+
+```sh
+ieftool build -c { config_path } -p { source_path } -o { output_path }
+```
+
+| option | description |
+|--|--|
+| config | The path to the configuration file. Defaults to './b2c-template.json' |
+| source_path | The path to your b2c policies |
+| output_path | The path where the compiled policies are written to |
