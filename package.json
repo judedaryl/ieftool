@@ -1,7 +1,7 @@
 {
   "name": "ieftool",
-  "version": "1.0.9",
-  "description": "Uploader tool for B2C",
+  "version": "1.0.10",
+  "description": "Development tool for Azure B2C IEF policies",
   "main": "dist/entry.js",
   "license": "MIT",
   "author": {
@@ -41,7 +41,9 @@
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "commander": "^7.1.0",
+    "del": "^5.1.0",
     "figlet": "^1.5.0",
+    "globby": "^11.0.1",
     "tsc-watch": "^4.2.9",
     "xml2js": "^0.4.23"
   }
