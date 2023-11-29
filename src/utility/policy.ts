@@ -51,6 +51,10 @@ export function transformPolicies(policies: IPolicy[], targetDir: string, config
     let configFile = fs.readFileSync(configFilePath, 'utf-8');
     let transformConfig: ITransformConfig = JSON.parse(configFile);
 
+    //Remove the target folder and recreate to ensure it is empty
+    fs.rmdirSync(targetDir, { recursive: true });
+    fs.mkdirSync(targetDir);
+
     for (let i = 0; i < policies.length; i++) {
         let policy = policies[i];         
 
