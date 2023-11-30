@@ -28,4 +28,6 @@ interface ITransformConfig {
     deploymentMode: string;
     identityExperienceFrameworkClientId: string;
     proxyIdentityExperienceFrameworkClientId: string;
+    aiInstrumentationKey: string;
+    contentPath: string;
 }

@@ -52,7 +52,7 @@ export function transformPolicies(policies: IPolicy[], targetDir: string, config
     let transformConfig: ITransformConfig = JSON.parse(configFile);
 
     //Remove the target folder and recreate to ensure it is empty
-    fs.rmdirSync(targetDir, { recursive: true });
+    fs.rmSync(targetDir, { recursive: true });
     fs.mkdirSync(targetDir);
 
     for (let i = 0; i < policies.length; i++) {
@@ -66,6 +66,8 @@ export function transformPolicies(policies: IPolicy[], targetDir: string, config
             result = result.replace(/{{ proxyIdentityExperienceFrameworkClientId }}/g, transformConfig.proxyIdentityExperienceFrameworkClientId);
             result = result.replace(/{{ identityExperienceFrameworkClientId }}/g, transformConfig.identityExperienceFrameworkClientId);
             result = result.replace(/{{ deploymentMode }}/g, transformConfig.deploymentMode);
+            result = result.replace(/{{ aiInstrumentationKey }}/g, transformConfig.aiInstrumentationKey);
+            result = result.replace(/{{ contentPath }}/g, transformConfig.contentPath);
           
             let targetPath = targetDir + '\\' + policy.policyId + '.xml';
             fs.writeFile(targetPath, result, 'utf8', function (err) {
