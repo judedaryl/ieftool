@@ -68,6 +68,8 @@ export function transformPolicies(policies: IPolicy[], targetDir: string, config
             result = result.replace(/{{ deploymentMode }}/g, transformConfig.deploymentMode);
             result = result.replace(/{{ aiInstrumentationKey }}/g, transformConfig.aiInstrumentationKey);
             result = result.replace(/{{ contentPath }}/g, transformConfig.contentPath);
+            result = result.replace(/{{ b2cExtensionAppClientId }}/g, transformConfig.b2cExtensionAppClientId);
+            result = result.replace(/{{ b2cExtensionAppApplicationObjectId }}/g, transformConfig.b2cExtensionAppApplicationObjectId);            
           
             let targetPath = targetDir + '\\' + policy.policyId + '.xml';
             fs.writeFile(targetPath, result, 'utf8', function (err) {

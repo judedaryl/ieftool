@@ -30,4 +30,6 @@ interface ITransformConfig {
     proxyIdentityExperienceFrameworkClientId: string;
     aiInstrumentationKey: string;
     contentPath: string;
+    b2cExtensionAppClientId: string;
+    b2cExtensionAppApplicationObjectId: string;
 }
