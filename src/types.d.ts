@@ -22,3 +22,16 @@ interface IBranch {
     policy: IPolicy
     children: IBranch[]
 }
+
+interface IParameters {
+    parameters: {
+        [key: string]: string
+    }
+}
+
+interface IBuildOptions {
+    config: string
+    source_path: string
+    output_dir: string
+    extensions: string[]
+}
