@@ -25,5 +25,8 @@ export function copyFile(inputPath: string, outputPath: string) {
 }
 
 export function clearDirectory(path: string) {
-    del.sync(path);
+    if (fs.existsSync(path)){
+        fs.rmSync(path, { recursive: true });
+    }
+    fs.mkdirSync(path);
 }
