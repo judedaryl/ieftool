@@ -1,6 +1,6 @@
 {
   "name": "ieftool",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Development tool for Azure B2C IEF policies",
   "main": "dist/entry.js",
   "license": "MIT",
