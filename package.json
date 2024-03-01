@@ -1,6 +1,6 @@
 {
   "name": "ieftool",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Development tool for Azure B2C IEF policies",
   "main": "dist/entry.js",
   "license": "MIT",
@@ -36,7 +36,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@azure/msal-node": "^1.0.1",
+    "@azure/msal-node": "^2.6.4",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
