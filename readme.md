@@ -1,6 +1,6 @@
 # Go port
 
-A port of this package written in golang is available at https://github.com/judedaryl/go-ieftool. Both packages these packages will be supported. If you want to use the tool but do not want the node runtime that it requires, please check out the port.
+A port of this package written in golang is available at https://github.com/judedaryl/go-ieftool. The nodeJS version of ieftool will no longer be maintained.
 
 # About
 
